@@ -1,0 +1,13 @@
+.auth-page {
+  min-height: 100vh; display: flex; align-items: center; justify-content: center;
+  background: linear-gradient(135deg, var(--navy) 0%, #143a63 60%, var(--accent) 160%);
+  padding: 20px;
+}
+.auth-card { width: 100%; max-width: 420px; padding: 36px; }
+.auth-header { text-align: center; margin-bottom: 24px; }
+.brand-icon { font-size: 34px; color: var(--accent); margin-bottom: 8px; }
+.subtitle { color: var(--text-muted); font-size: 13px; margin-top: 4px; }
+.demo-accounts { margin-top: 20px; padding-top: 16px; border-top: 1px solid var(--border); }
+.demo-title { font-size: 12px; font-weight: 700; color: var(--text-muted); margin-bottom: 10px; text-transform: uppercase; }
+.demo-list { display: flex; flex-wrap: wrap; gap: 8px; }
+.footer-link { text-align: center; margin-top: 18px; font-size: 13px; color: var(--text-muted); }

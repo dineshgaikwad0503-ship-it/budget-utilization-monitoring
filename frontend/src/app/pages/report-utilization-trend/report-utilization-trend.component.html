@@ -1,0 +1,25 @@
+<div class="page-header">
+  <div>
+    <h1>Utilization Trend Report</h1>
+    <p style="color:var(--text-muted); margin:0;">Monthly expenditure trend across all departments and schemes</p>
+  </div>
+</div>
+
+<div class="card" style="margin-bottom:20px;">
+  <canvas baseChart [data]="chartData" [options]="chartOptions" type="line" style="max-height:320px"></canvas>
+</div>
+
+<div class="card">
+  <table>
+    <thead><tr><th>Month</th><th>Total Expenditure</th></tr></thead>
+    <tbody>
+      <tr *ngFor="let t of trend">
+        <td>{{ t.label }}</td>
+        <td>₹{{ t.total | number }}</td>
+      </tr>
+      <tr *ngIf="!loading && trend.length === 0">
+        <td colspan="2" style="text-align:center; color:var(--text-muted);">No expenditure data available.</td>
+      </tr>
+    </tbody>
+  </table>
+</div>

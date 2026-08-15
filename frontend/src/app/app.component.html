@@ -1,0 +1,12 @@
+<ng-container *ngIf="showShell && auth.isLoggedIn(); else bareLayout">
+  <app-navbar></app-navbar>
+  <div class="shell">
+    <app-sidebar></app-sidebar>
+    <main class="content">
+      <router-outlet></router-outlet>
+    </main>
+  </div>
+</ng-container>
+<ng-template #bareLayout>
+  <router-outlet></router-outlet>
+</ng-template>

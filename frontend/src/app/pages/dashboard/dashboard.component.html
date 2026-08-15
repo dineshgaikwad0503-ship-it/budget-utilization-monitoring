@@ -1,0 +1,53 @@
+<div class="page-header">
+  <div>
+    <h1>Dashboard</h1>
+    <p style="color:var(--text-muted); margin:0;">Real-time overview of budget allocation and utilization</p>
+  </div>
+</div>
+
+<div class="grid grid-4" *ngIf="summary">
+  <div class="card stat-card">
+    <div class="label">Total Allocated</div>
+    <div class="value">{{ formatCurrency(summary.totalAllocated) }}</div>
+  </div>
+  <div class="card stat-card">
+    <div class="label">Total Utilized</div>
+    <div class="value">{{ formatCurrency(summary.totalSpent) }}</div>
+  </div>
+  <div class="card stat-card">
+    <div class="label">Utilization Rate</div>
+    <div class="value">{{ summary.utilizationRate }}%</div>
+  </div>
+  <div class="card stat-card">
+    <div class="label">Active Alerts</div>
+    <div class="value" [style.color]="summary.activeAlerts > 0 ? 'var(--danger)' : 'var(--navy)'">{{ summary.activeAlerts }}</div>
+  </div>
+</div>
+
+<div class="grid grid-2" style="margin-top: 20px;">
+  <div class="card">
+    <h3>Department-wise Utilization (%)</h3>
+    <canvas baseChart [data]="utilizationChartData" [options]="utilizationChartOptions" type="bar"></canvas>
+  </div>
+  <div class="card">
+    <h3>Expenditure Trend</h3>
+    <canvas baseChart [data]="trendChartData" [options]="trendChartOptions" type="line"></canvas>
+  </div>
+</div>
+
+<div class="grid grid-2" style="margin-top: 20px;">
+  <div class="card">
+    <h3>Category-wise Expenditure Breakdown</h3>
+    <canvas baseChart [data]="categoryChartData" [options]="categoryChartOptions" type="doughnut"></canvas>
+  </div>
+  <div class="card">
+    <h3>Quick Stats</h3>
+    <table *ngIf="summary">
+      <tbody>
+        <tr><td>Total Budgets</td><td>{{ summary.totalBudgets }}</td></tr>
+        <tr><td>Total Departments</td><td>{{ summary.totalDepartments }}</td></tr>
+        <tr><td>Remaining Funds</td><td>{{ formatCurrency(summary.totalRemaining) }}</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>

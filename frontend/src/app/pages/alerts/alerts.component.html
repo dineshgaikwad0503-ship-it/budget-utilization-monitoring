@@ -1,0 +1,33 @@
+<div class="page-header">
+  <div>
+    <h1>Alerts & Anomaly Detection</h1>
+    <p style="color:var(--text-muted); margin:0;">Automated flags for under-utilization, overspending, and spending spikes</p>
+  </div>
+  <button class="btn btn-accent" *ngIf="canManage()" (click)="runScan()" [disabled]="scanning">
+    {{ scanning ? 'Scanning...' : 'Run Detection Scan' }}
+  </button>
+</div>
+
+<div class="card" style="margin-bottom:16px; display:flex; gap:8px;">
+  <button class="btn btn-sm" [ngClass]="filter === 'active' ? 'btn-primary' : 'btn-outline'" (click)="setFilter('active')">Active</button>
+  <button class="btn btn-sm" [ngClass]="filter === 'resolved' ? 'btn-primary' : 'btn-outline'" (click)="setFilter('resolved')">Resolved</button>
+  <button class="btn btn-sm" [ngClass]="filter === 'all' ? 'btn-primary' : 'btn-outline'" (click)="setFilter('all')">All</button>
+</div>
+
+<div class="grid" style="grid-template-columns: 1fr; gap: 12px;">
+  <div class="card" *ngFor="let a of alerts" style="display:flex; justify-content:space-between; align-items:flex-start; gap:16px;">
+    <div>
+      <div style="display:flex; gap:8px; align-items:center; margin-bottom:6px;">
+        <span class="badge" [ngClass]="severityBadge(a.severity)">{{ a.severity }}</span>
+        <span class="badge badge-info">{{ a.alertType }}</span>
+        <span *ngIf="a.isResolved" class="badge badge-success">Resolved</span>
+      </div>
+      <p style="margin:0; font-size:14px;">{{ a.message }}</p>
+      <p style="margin:4px 0 0; font-size:12px; color:var(--text-muted);">{{ a.department?.name }} · {{ a.createdAt | date:'medium' }}</p>
+    </div>
+    <button class="btn btn-outline btn-sm" *ngIf="!a.isResolved && canManage()" (click)="resolve(a._id)">Mark Resolved</button>
+  </div>
+  <div class="card" *ngIf="!loading && alerts.length === 0" style="text-align:center; color:var(--text-muted);">
+    No alerts found for this filter.
+  </div>
+</div>

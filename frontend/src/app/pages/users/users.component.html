@@ -1,0 +1,24 @@
+<div class="page-header">
+  <div>
+    <h1>Users</h1>
+    <p style="color:var(--text-muted); margin:0;">All registered platform users</p>
+  </div>
+</div>
+
+<div class="card">
+  <table>
+    <thead><tr><th>Name</th><th>Email</th><th>Role</th><th>Department</th><th>Status</th></tr></thead>
+    <tbody>
+      <tr *ngFor="let u of users" style="cursor:pointer;" [routerLink]="['/admin/users', u._id]">
+        <td>{{ u.name }}</td>
+        <td>{{ u.email }}</td>
+        <td><span class="badge badge-info">{{ u.role }}</span></td>
+        <td>{{ u.department?.name || '—' }}</td>
+        <td><span class="badge" [ngClass]="u.isActive ? 'badge-success' : 'badge-danger'">{{ u.isActive ? 'Active' : 'Inactive' }}</span></td>
+      </tr>
+      <tr *ngIf="!loading && users.length === 0">
+        <td colspan="5" style="text-align:center; color:var(--text-muted);">No users found.</td>
+      </tr>
+    </tbody>
+  </table>
+</div>

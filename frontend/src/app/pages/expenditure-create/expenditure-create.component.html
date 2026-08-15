@@ -1,0 +1,38 @@
+<div class="breadcrumb"><a routerLink="/expenditures">Expenditure Tracking</a> / New Entry</div>
+<div class="page-header"><h1>Record Expenditure</h1></div>
+
+<div class="card" style="max-width:700px;">
+  <div class="alert-banner error" *ngIf="errorMessage">{{ errorMessage }}</div>
+  <form [formGroup]="form" (ngSubmit)="submit()">
+    <div class="form-group">
+      <label>Budget / Scheme</label>
+      <select class="form-control" formControlName="budget">
+        <option value="">-- Select --</option>
+        <option *ngFor="let b of budgets" [value]="b._id">{{ b.scheme }} ({{ b.financialYear }})</option>
+      </select>
+    </div>
+    <div class="grid grid-2">
+      <div class="form-group">
+        <label>Amount Spent (₹)</label>
+        <input class="form-control" type="number" formControlName="amountSpent" />
+      </div>
+      <div class="form-group">
+        <label>Category</label>
+        <select class="form-control" formControlName="expenseCategory">
+          <option *ngFor="let c of categories" [value]="c">{{ c }}</option>
+        </select>
+      </div>
+    </div>
+    <div class="grid grid-2">
+      <div class="form-group">
+        <label>Date</label>
+        <input class="form-control" type="date" formControlName="date" />
+      </div>
+      <div class="form-group">
+        <label>Description</label>
+        <input class="form-control" formControlName="description" />
+      </div>
+    </div>
+    <button class="btn btn-primary" type="submit" [disabled]="form.invalid">Save Entry</button>
+  </form>
+</div>

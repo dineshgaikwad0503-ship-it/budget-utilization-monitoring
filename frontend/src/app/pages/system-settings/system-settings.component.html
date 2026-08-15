@@ -1,0 +1,17 @@
+<div class="page-header">
+  <div>
+    <h1>System Settings</h1>
+    <p style="color:var(--text-muted); margin:0;">Platform-wide configuration for the Budget Utilization Monitoring System</p>
+  </div>
+</div>
+
+<div class="card" style="max-width:700px;">
+  <table>
+    <tbody>
+      <tr *ngFor="let s of settings">
+        <td style="color:var(--text-muted); width:220px;">{{ s.label }}</td>
+        <td>{{ s.value }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>

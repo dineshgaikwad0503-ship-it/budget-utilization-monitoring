@@ -1,0 +1,17 @@
+<div class="page-header">
+  <div>
+    <h1>Departments</h1>
+    <p style="color:var(--text-muted); margin:0;">All departments mapped in the platform</p>
+  </div>
+  <a routerLink="/departments/new" class="btn btn-accent" *ngIf="auth.hasRole('Admin')">+ Add Department</a>
+</div>
+
+<div class="grid grid-3">
+  <a class="card" *ngFor="let d of departments" [routerLink]="['/departments', d._id]" style="text-decoration:none; color:inherit;">
+    <div class="section-tag">{{ d.code }}</div>
+    <h3 style="font-size:16px;">{{ d.name }}</h3>
+    <p style="font-size:13px;">{{ d.description || 'No description provided.' }}</p>
+    <p style="font-size:12px; margin-top:8px;">Head: {{ d.headOfDepartment?.name || '—' }}</p>
+  </a>
+  <div class="empty-state" *ngIf="!loading && departments.length === 0">No departments found.</div>
+</div>

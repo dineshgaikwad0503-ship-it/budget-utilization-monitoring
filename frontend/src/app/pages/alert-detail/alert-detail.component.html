@@ -1,0 +1,29 @@
+<div class="breadcrumb"><a routerLink="/alerts">Alerts</a> / Detail</div>
+
+<ng-container *ngIf="alert">
+  <div class="page-header">
+    <div>
+      <h1>{{ alert.alertType }} Alert</h1>
+      <p style="color:var(--text-muted); margin:0;">{{ alert.department?.name }} · {{ alert.createdAt | date:'medium' }}</p>
+    </div>
+    <button class="btn btn-accent" *ngIf="!alert.isResolved && auth.hasRole('Admin','FinanceOfficer')" (click)="resolve()">Mark Resolved</button>
+  </div>
+
+  <div class="card" style="max-width:700px;">
+    <div style="display:flex; gap:8px; margin-bottom:14px;">
+      <span class="badge" [ngClass]="severityBadge(alert.severity)">{{ alert.severity }}</span>
+      <span class="badge badge-info">{{ alert.alertType }}</span>
+      <span class="badge" [ngClass]="alert.isResolved ? 'badge-success' : 'badge-warning'">{{ alert.isResolved ? 'Resolved' : 'Active' }}</span>
+    </div>
+    <p style="font-size:15px; color:var(--text);">{{ alert.message }}</p>
+    <table style="margin-top:14px;">
+      <tbody>
+        <tr><td style="width:160px; color:var(--text-muted);">Department</td><td>{{ alert.department?.name }}</td></tr>
+        <tr *ngIf="alert.budget"><td style="color:var(--text-muted);">Related Budget</td><td>{{ alert.budget.scheme }}</td></tr>
+        <tr><td style="color:var(--text-muted);">Raised</td><td>{{ alert.createdAt | date:'medium' }}</td></tr>
+      </tbody>
+    </table>
+  </div>
+</ng-container>
+
+<div class="empty-state" *ngIf="!loading && !alert">Alert not found.</div>

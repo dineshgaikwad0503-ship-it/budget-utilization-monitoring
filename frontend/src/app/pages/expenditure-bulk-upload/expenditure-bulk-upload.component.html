@@ -1,0 +1,48 @@
+<div class="page-header">
+  <div>
+    <h1>Bulk Upload Expenditures</h1>
+    <p style="color:var(--text-muted); margin:0;">Upload a CSV of expenditure transactions to record them in bulk</p>
+  </div>
+</div>
+
+<div class="grid grid-3" style="margin-bottom:20px;">
+  <div class="card">
+    <h3 style="font-size:15px;">1. Prepare your file</h3>
+    <p style="font-size:13px;">Columns: budgetId, amountSpent, expenseCategory, date, description. Save as .csv.</p>
+  </div>
+  <div class="card">
+    <h3 style="font-size:15px;">2. Upload</h3>
+    <p style="font-size:13px;">Choose the file below — each row is validated before submission.</p>
+  </div>
+  <div class="card">
+    <h3 style="font-size:15px;">3. Review &amp; Confirm</h3>
+    <p style="font-size:13px;">Preview parsed rows, fix any errors, then submit to record all transactions.</p>
+  </div>
+</div>
+
+<div class="card">
+  <div class="alert-banner success" *ngIf="resultMessage">{{ resultMessage }}</div>
+  <div class="form-group">
+    <label>CSV File</label>
+    <input type="file" accept=".csv" (change)="onFileSelected($event)" class="form-control" />
+  </div>
+
+  <table *ngIf="rows.length > 0">
+    <thead><tr><th>Budget ID</th><th>Amount</th><th>Category</th><th>Date</th><th>Status</th></tr></thead>
+    <tbody>
+      <tr *ngFor="let r of rows">
+        <td>{{ r.budgetId }}</td>
+        <td>₹{{ r.amountSpent | number }}</td>
+        <td>{{ r.expenseCategory }}</td>
+        <td>{{ r.date }}</td>
+        <td>
+          <span class="badge" [ngClass]="r.valid ? 'badge-success' : 'badge-danger'">{{ r.valid ? 'Valid' : r.error }}</span>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <button class="btn btn-primary" style="margin-top:16px;" *ngIf="rows.length > 0" [disabled]="validRows.length === 0 || submitting" (click)="submitAll()">
+    {{ submitting ? 'Submitting...' : 'Submit ' + validRows.length + ' Valid Row(s)' }}
+  </button>
+</div>

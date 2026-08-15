@@ -1,0 +1,38 @@
+<div class="page-header">
+  <div>
+    <h1>Alert Rules Configuration</h1>
+    <p style="color:var(--text-muted); margin:0;">Live thresholds used by the rule-based anomaly detection engine</p>
+  </div>
+</div>
+
+<div class="card" style="max-width:640px;" *ngIf="!loading">
+  <div class="alert-banner success" *ngIf="saved">Thresholds updated — the next detection scan will use these values.</div>
+  <div class="alert-banner error" *ngIf="errorMessage">{{ errorMessage }}</div>
+  <div class="alert-banner" *ngIf="!canEdit()" style="background:rgba(52,201,240,0.1); color:var(--accent-2); border-color:rgba(52,201,240,0.3);">
+    Read-only for your role. Admin or Finance Officer can edit these values.
+  </div>
+
+  <form [formGroup]="form" (ngSubmit)="submit()">
+    <div class="form-group">
+      <label>Under-Utilization Threshold (%)</label>
+      <input class="form-control" type="number" formControlName="underUtilizationPercent" [readonly]="!canEdit()" />
+      <p style="font-size:12px; margin:6px 0 0;">Flag a budget when utilization is below this percentage after the time-elapsed threshold is reached.</p>
+    </div>
+    <div class="form-group">
+      <label>Time-Elapsed Threshold (%)</label>
+      <input class="form-control" type="number" formControlName="timeElapsedPercent" [readonly]="!canEdit()" />
+      <p style="font-size:12px; margin:6px 0 0;">Portion of the financial year that must have passed before under-utilization is flagged.</p>
+    </div>
+    <div class="form-group">
+      <label>Overspending Threshold (%)</label>
+      <input class="form-control" type="number" formControlName="overspendPercent" [readonly]="!canEdit()" />
+      <p style="font-size:12px; margin:6px 0 0;">Flag a budget once expenditure exceeds this percentage of its allocation.</p>
+    </div>
+    <div class="form-group">
+      <label>Spending Spike Multiplier (x)</label>
+      <input class="form-control" type="number" step="0.5" formControlName="spikeMultiplier" [readonly]="!canEdit()" />
+      <p style="font-size:12px; margin:6px 0 0;">Flag a single transaction exceeding this multiple of the budget's average transaction size.</p>
+    </div>
+    <button class="btn btn-primary" type="submit" *ngIf="canEdit()" [disabled]="form.invalid">Save Thresholds</button>
+  </form>
+</div>

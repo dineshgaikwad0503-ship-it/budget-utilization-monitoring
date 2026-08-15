@@ -1,0 +1,27 @@
+<div class="breadcrumb"><a routerLink="/expenditures">Expenditure Tracking</a> / Detail</div>
+
+<ng-container *ngIf="expenditure">
+  <div class="page-header">
+    <div>
+      <h1>₹{{ expenditure.amountSpent | number }}</h1>
+      <p style="color:var(--text-muted); margin:0;">{{ expenditure.expenseCategory }} · {{ expenditure.date | date:'mediumDate' }}</p>
+    </div>
+    <a [routerLink]="['/expenditures', expenditure._id, 'edit']" class="btn btn-outline">Edit</a>
+  </div>
+
+  <div class="card" style="max-width:700px;">
+    <table>
+      <tbody>
+        <tr><td style="width:180px; color:var(--text-muted);">Scheme</td><td>{{ expenditure.budget?.scheme }}</td></tr>
+        <tr><td style="color:var(--text-muted);">Department</td><td>{{ expenditure.department?.name }}</td></tr>
+        <tr><td style="color:var(--text-muted);">Category</td><td>{{ expenditure.expenseCategory }}</td></tr>
+        <tr><td style="color:var(--text-muted);">Amount</td><td>₹{{ expenditure.amountSpent | number }}</td></tr>
+        <tr><td style="color:var(--text-muted);">Status</td><td><span class="badge badge-success">{{ expenditure.status }}</span></td></tr>
+        <tr><td style="color:var(--text-muted);">Description</td><td>{{ expenditure.description || '—' }}</td></tr>
+        <tr *ngIf="expenditure.recordedBy"><td style="color:var(--text-muted);">Recorded By</td><td>{{ expenditure.recordedBy.name }}</td></tr>
+      </tbody>
+    </table>
+  </div>
+</ng-container>
+
+<div class="empty-state" *ngIf="!loading && !expenditure">Expenditure record not found.</div>

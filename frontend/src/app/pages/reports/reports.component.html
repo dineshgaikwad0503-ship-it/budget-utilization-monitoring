@@ -1,0 +1,44 @@
+<div class="page-header">
+  <div>
+    <h1>Reports</h1>
+    <p style="color:var(--text-muted); margin:0;">Department-wise financial summaries and downloadable reports</p>
+  </div>
+</div>
+
+<div class="grid grid-2">
+  <div class="card">
+    <h3>Budget Utilization Report</h3>
+    <p style="color:var(--text-muted); font-size:14px;">Allocation vs. utilization across all departments and financial years.</p>
+    <div style="display:flex; gap:10px;">
+      <button class="btn btn-primary" (click)="exportBudgetsCsv()">Download CSV</button>
+      <button class="btn btn-outline" (click)="downloadBudgetPdf()" [disabled]="downloadingBudgetPdf">{{ downloadingBudgetPdf ? 'Generating...' : 'Download PDF' }}</button>
+    </div>
+  </div>
+  <div class="card">
+    <h3>Expenditure Detail Report</h3>
+    <p style="color:var(--text-muted); font-size:14px;">Full transaction-level record of all expenditures.</p>
+    <div style="display:flex; gap:10px;">
+      <button class="btn btn-primary" (click)="exportExpendituresCsv()">Download CSV</button>
+      <button class="btn btn-outline" (click)="downloadExpenditurePdf()" [disabled]="downloadingExpPdf">{{ downloadingExpPdf ? 'Generating...' : 'Download PDF' }}</button>
+    </div>
+  </div>
+</div>
+
+<div class="card" style="margin-top:20px;">
+  <h3>Budget Summary Preview</h3>
+  <table>
+    <thead>
+      <tr><th>Scheme</th><th>Department</th><th>FY</th><th>Allocated</th><th>Utilized</th><th>Utilization</th></tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let b of budgets">
+        <td>{{ b.scheme }}</td>
+        <td>{{ b.department?.name }}</td>
+        <td>{{ b.financialYear }}</td>
+        <td>₹{{ b.allocatedAmount | number }}</td>
+        <td>₹{{ (b.utilizedAmount || 0) | number }}</td>
+        <td>{{ b.utilizationRate }}%</td>
+      </tr>
+    </tbody>
+  </table>
+</div>

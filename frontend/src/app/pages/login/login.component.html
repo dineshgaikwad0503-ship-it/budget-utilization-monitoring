@@ -1,0 +1,36 @@
+<div class="auth-page">
+  <div class="auth-card card">
+    <div class="auth-header">
+      <div class="brand-icon">◈</div>
+      <h1>Budget Utilization Monitor</h1>
+      <p class="subtitle">AI-Based Budget Utilization Monitoring System</p>
+    </div>
+
+    <div class="alert-banner error" *ngIf="errorMessage">{{ errorMessage }}</div>
+
+    <form [formGroup]="form" (ngSubmit)="submit()">
+      <div class="form-group">
+        <label>Email address</label>
+        <input class="form-control" type="email" formControlName="email" placeholder="you@department.gov.in" />
+      </div>
+      <div class="form-group">
+        <label>Password</label>
+        <input class="form-control" type="password" formControlName="password" placeholder="••••••••" />
+      </div>
+      <button class="btn btn-primary" style="width:100%" type="submit" [disabled]="form.invalid || loading">
+        {{ loading ? 'Signing in...' : 'Sign In' }}
+      </button>
+    </form>
+
+    <div class="demo-accounts">
+      <div class="demo-title">Quick demo login</div>
+      <div class="demo-list">
+        <button type="button" class="btn btn-outline btn-sm" *ngFor="let acc of demoAccounts" (click)="fillDemo(acc)">
+          {{ acc.label }}
+        </button>
+      </div>
+    </div>
+
+    <p class="footer-link">No account? <a routerLink="/register">Register here</a></p>
+  </div>
+</div>

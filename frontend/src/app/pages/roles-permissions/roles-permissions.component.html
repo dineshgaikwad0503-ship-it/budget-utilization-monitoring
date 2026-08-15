@@ -1,0 +1,14 @@
+<div class="page-header">
+  <div>
+    <h1>Roles &amp; Permissions</h1>
+    <p style="color:var(--text-muted); margin:0;">Reference for what each role can see and do across the platform</p>
+  </div>
+</div>
+
+<div class="info-grid">
+  <div class="card info-card" *ngFor="let r of roles">
+    <div class="info-tag">{{ r.tag }}</div>
+    <h3>{{ r.title }}</h3>
+    <p>{{ r.body }}</p>
+  </div>
+</div>

@@ -1,0 +1,14 @@
+{
+  "name": "budget-utilization-monitoring",
+  "version": "1.0.0",
+  "private": true,
+  "description": "AI-Based Budget Utilization Monitoring System — single-deployment root (builds Angular frontend, then runs the Express backend which serves it).",
+  "scripts": {
+    "install:backend": "cd backend && npm install",
+    "install:frontend": "cd frontend && npm install",
+    "install:all": "npm run install:backend && npm run install:frontend",
+    "build": "npm run install:all && cd frontend && npm run build",
+    "start": "cd backend && npm start",
+    "seed": "cd backend && npm run seed"
+  }
+}

@@ -1,0 +1,24 @@
+<div class="page-header">
+  <div>
+    <h1>Department Summary Report</h1>
+    <p style="color:var(--text-muted); margin:0;">Allocation, expenditure, and utilization rate summarized per department</p>
+  </div>
+  <button class="btn btn-primary" (click)="exportCsv()">Download CSV</button>
+</div>
+
+<div class="card">
+  <table>
+    <thead><tr><th>Department</th><th>Allocated</th><th>Spent</th><th>Utilization %</th></tr></thead>
+    <tbody>
+      <tr *ngFor="let d of deptData">
+        <td>{{ d.department }}</td>
+        <td>₹{{ d.allocated | number }}</td>
+        <td>₹{{ d.spent | number }}</td>
+        <td>{{ d.utilizationRate }}%</td>
+      </tr>
+      <tr *ngIf="!loading && deptData.length === 0">
+        <td colspan="4" style="text-align:center; color:var(--text-muted);">No data available.</td>
+      </tr>
+    </tbody>
+  </table>
+</div>

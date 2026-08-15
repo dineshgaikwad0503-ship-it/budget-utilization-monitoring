@@ -1,0 +1,46 @@
+<div class="auth-page">
+  <div class="auth-card card">
+    <div class="auth-header">
+      <div class="brand-icon">◈</div>
+      <h1>Create Account</h1>
+      <p class="subtitle">Register for Budget Utilization Monitor access</p>
+    </div>
+
+    <div class="alert-banner error" *ngIf="errorMessage">{{ errorMessage }}</div>
+
+    <form [formGroup]="form" (ngSubmit)="submit()">
+      <div class="form-group">
+        <label>Full name</label>
+        <input class="form-control" type="text" formControlName="name" placeholder="Jane Doe" />
+      </div>
+      <div class="form-group">
+        <label>Email address</label>
+        <input class="form-control" type="email" formControlName="email" placeholder="you@department.gov.in" />
+      </div>
+      <div class="form-group">
+        <label>Password</label>
+        <input class="form-control" type="password" formControlName="password" placeholder="Minimum 6 characters" />
+      </div>
+      <div class="form-group">
+        <label>Role</label>
+        <select class="form-control" formControlName="role">
+          <option value="DepartmentHead">Department Head</option>
+          <option value="FinanceOfficer">Finance Officer</option>
+          <option value="Admin">Admin</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Department</label>
+        <select class="form-control" formControlName="department">
+          <option value="">-- Select department --</option>
+          <option *ngFor="let d of departments" [value]="d._id">{{ d.name }}</option>
+        </select>
+      </div>
+      <button class="btn btn-primary" style="width:100%" type="submit" [disabled]="form.invalid || loading">
+        {{ loading ? 'Creating account...' : 'Register' }}
+      </button>
+    </form>
+
+    <p class="footer-link">Already have an account? <a routerLink="/login">Sign in</a></p>
+  </div>
+</div>

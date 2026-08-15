@@ -1,0 +1,36 @@
+<div class="breadcrumb"><a routerLink="/departments">Departments</a> / Detail</div>
+
+<ng-container *ngIf="department">
+  <div class="page-header">
+    <div>
+      <h1>{{ department.name }}</h1>
+      <p style="color:var(--text-muted); margin:0;">Code: {{ department.code }}</p>
+    </div>
+    <a *ngIf="auth.hasRole('Admin')" [routerLink]="['/departments', department._id, 'edit']" class="btn btn-outline">Edit</a>
+  </div>
+
+  <div class="card" style="margin-bottom:20px;">
+    <p>{{ department.description || 'No description provided.' }}</p>
+    <p style="font-size:13px;">Head of Department: {{ department.headOfDepartment?.name || '—' }}</p>
+  </div>
+
+  <div class="card">
+    <h3>Budgets for this Department</h3>
+    <table>
+      <thead><tr><th>Scheme</th><th>FY</th><th>Allocated</th><th>Utilization</th></tr></thead>
+      <tbody>
+        <tr *ngFor="let b of budgets">
+          <td><a [routerLink]="['/budgets', b._id]">{{ b.scheme }}</a></td>
+          <td>{{ b.financialYear }}</td>
+          <td>₹{{ b.allocatedAmount | number }}</td>
+          <td>{{ b.utilizationRate }}%</td>
+        </tr>
+        <tr *ngIf="budgets.length === 0">
+          <td colspan="4" style="text-align:center; color:var(--text-muted);">No budgets allocated yet.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</ng-container>
+
+<div class="empty-state" *ngIf="!loading && !department">Department not found.</div>

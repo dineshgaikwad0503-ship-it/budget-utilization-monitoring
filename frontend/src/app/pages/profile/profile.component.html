@@ -1,0 +1,27 @@
+<div class="page-header">
+  <div>
+    <h1>My Profile</h1>
+    <p style="color:var(--text-muted); margin:0;">Your account details and role within the platform</p>
+  </div>
+</div>
+
+<div class="grid grid-2" *ngIf="auth.currentUser() as user">
+  <div class="card">
+    <div class="section-tag">Account</div>
+    <h3>{{ user.name }}</h3>
+    <table>
+      <tbody>
+        <tr><td>Email</td><td>{{ user.email }}</td></tr>
+        <tr><td>Role</td><td><span class="badge badge-info">{{ user.role }}</span></td></tr>
+        <tr><td>Department</td><td>{{ (user.department && $any(user.department).name) || 'All departments (org-wide access)' }}</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="card">
+    <div class="section-tag">Access Summary</div>
+    <h3>What you can do</h3>
+    <p *ngIf="user.role === 'Admin'">Full platform access — manage budgets, expenditures, departments, users, alert thresholds, and audit logs.</p>
+    <p *ngIf="user.role === 'FinanceOfficer'">Create and manage budgets and expenditures, resolve alerts, and run detection scans across all departments.</p>
+    <p *ngIf="user.role === 'DepartmentHead'">View and record expenditures for your department's budgets, and view your department's alerts.</p>
+  </div>
+</div>

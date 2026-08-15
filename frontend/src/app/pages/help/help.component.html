@@ -1,0 +1,16 @@
+<div class="page-header">
+  <div>
+    <h1>Help &amp; FAQs</h1>
+    <p style="color:var(--text-muted); margin:0;">Answers to common questions about budgets, expenditures, alerts, and roles</p>
+  </div>
+</div>
+
+<div class="faq-list">
+  <div class="card faq-item" *ngFor="let f of faqs" (click)="toggle(f)">
+    <div class="faq-q">
+      <span>{{ f.q }}</span>
+      <span class="chevron" [class.open]="f.open">⌄</span>
+    </div>
+    <p class="faq-a" *ngIf="f.open">{{ f.a }}</p>
+  </div>
+</div>

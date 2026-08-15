@@ -1,0 +1,17 @@
+<div class="page-header">
+  <div>
+    <h1>Notifications</h1>
+    <p style="color:var(--text-muted); margin:0;">Recent alerts and system notifications relevant to you</p>
+  </div>
+</div>
+
+<div class="grid" style="grid-template-columns:1fr; gap:10px; max-width:760px;">
+  <div class="card" *ngFor="let a of alerts" style="display:flex; gap:14px; align-items:flex-start;">
+    <div style="font-size:20px;">⚠</div>
+    <div>
+      <p style="margin:0; color:var(--text); font-size:14px;">{{ a.message }}</p>
+      <p style="margin:4px 0 0; font-size:12px;">{{ a.department?.name }} · {{ a.createdAt | date:'medium' }}</p>
+    </div>
+  </div>
+  <div class="empty-state" *ngIf="!loading && alerts.length === 0">You're all caught up — no active notifications.</div>
+</div>

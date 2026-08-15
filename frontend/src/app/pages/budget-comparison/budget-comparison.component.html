@@ -1,0 +1,31 @@
+<div class="page-header">
+  <div>
+    <h1>Budget Comparison</h1>
+    <p style="color:var(--text-muted); margin:0;">Compare allocation and utilization across financial years, per department</p>
+  </div>
+</div>
+
+<div class="card">
+  <table>
+    <thead>
+      <tr>
+        <th>Department</th>
+        <th *ngFor="let fy of financialYears">{{ fy }}</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let row of rows">
+        <td>{{ row.department }}</td>
+        <td *ngFor="let fy of financialYears">
+          <ng-container *ngIf="row.years[fy] as y; else noData">
+            ₹{{ y.allocated | number }} · {{ y.rate }}%
+          </ng-container>
+          <ng-template #noData>—</ng-template>
+        </td>
+      </tr>
+      <tr *ngIf="!loading && rows.length === 0">
+        <td [attr.colspan]="financialYears.length + 1" style="text-align:center; color:var(--text-muted);">No budget data found.</td>
+      </tr>
+    </tbody>
+  </table>
+</div>

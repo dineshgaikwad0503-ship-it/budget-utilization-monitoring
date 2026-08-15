@@ -1,0 +1,24 @@
+<div class="breadcrumb"><a routerLink="/admin/users">Users</a> / Detail</div>
+
+<ng-container *ngIf="user">
+  <div class="page-header">
+    <div>
+      <h1>{{ user.name }}</h1>
+      <p style="color:var(--text-muted); margin:0;">{{ user.email }}</p>
+    </div>
+    <button class="btn btn-outline" (click)="toggleActive()">{{ user.isActive ? 'Deactivate' : 'Activate' }}</button>
+  </div>
+
+  <div class="card" style="max-width:600px;">
+    <table>
+      <tbody>
+        <tr><td style="width:160px; color:var(--text-muted);">Role</td><td><span class="badge badge-info">{{ user.role }}</span></td></tr>
+        <tr><td style="color:var(--text-muted);">Department</td><td>{{ user.department?.name || '—' }}</td></tr>
+        <tr><td style="color:var(--text-muted);">Status</td><td><span class="badge" [ngClass]="user.isActive ? 'badge-success' : 'badge-danger'">{{ user.isActive ? 'Active' : 'Inactive' }}</span></td></tr>
+        <tr><td style="color:var(--text-muted);">Last Login</td><td>{{ user.lastLogin ? (user.lastLogin | date:'medium') : 'Never' }}</td></tr>
+      </tbody>
+    </table>
+  </div>
+</ng-container>
+
+<div class="empty-state" *ngIf="!loading && !user">User not found.</div>

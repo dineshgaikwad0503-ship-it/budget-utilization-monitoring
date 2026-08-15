@@ -1,0 +1,12 @@
+<div class="breadcrumb"><a routerLink="/departments">Departments</a> / Edit Department</div>
+<div class="page-header"><h1>Edit Department</h1></div>
+
+<div class="card" style="max-width:600px;" *ngIf="!loading">
+  <div class="alert-banner error" *ngIf="errorMessage">{{ errorMessage }}</div>
+  <form [formGroup]="form" (ngSubmit)="submit()">
+    <div class="form-group"><label>Name</label><input class="form-control" formControlName="name" /></div>
+    <div class="form-group"><label>Code</label><input class="form-control" formControlName="code" /></div>
+    <div class="form-group"><label>Description</label><textarea class="form-control" formControlName="description" rows="3"></textarea></div>
+    <button class="btn btn-primary" type="submit" [disabled]="form.invalid">Save Changes</button>
+  </form>
+</div>

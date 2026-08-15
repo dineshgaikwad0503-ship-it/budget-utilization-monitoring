@@ -1,0 +1,92 @@
+<div class="page-header">
+  <div>
+    <h1>Budget Management</h1>
+    <p style="color:var(--text-muted); margin:0;">Create and track annual/quarterly budget allocations</p>
+  </div>
+  <button class="btn btn-accent" *ngIf="canManage()" (click)="toggleForm()">
+    {{ showForm ? 'Cancel' : '+ New Allocation' }}
+  </button>
+</div>
+
+<div class="card" *ngIf="showForm" style="margin-bottom:20px;">
+  <h3>New Budget Allocation</h3>
+  <div class="alert-banner error" *ngIf="errorMessage">{{ errorMessage }}</div>
+  <form [formGroup]="form" (ngSubmit)="submit()">
+    <div class="grid grid-3">
+      <div class="form-group">
+        <label>Financial Year</label>
+        <select class="form-control" formControlName="financialYear">
+          <option value="2024-2025">2024-2025</option>
+          <option value="2025-2026">2025-2026</option>
+          <option value="2026-2027">2026-2027</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Department</label>
+        <select class="form-control" formControlName="department">
+          <option value="">-- Select --</option>
+          <option *ngFor="let d of departments" [value]="d._id">{{ d.name }}</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Quarter</label>
+        <select class="form-control" formControlName="quarter">
+          <option>Annual</option>
+          <option>Q1</option>
+          <option>Q2</option>
+          <option>Q3</option>
+          <option>Q4</option>
+        </select>
+      </div>
+    </div>
+    <div class="grid grid-2">
+      <div class="form-group">
+        <label>Scheme / Project Name</label>
+        <input class="form-control" formControlName="scheme" placeholder="e.g. Rural Roads Development Scheme" />
+      </div>
+      <div class="form-group">
+        <label>Allocated Amount (₹)</label>
+        <input class="form-control" type="number" formControlName="allocatedAmount" placeholder="e.g. 10000000" />
+      </div>
+    </div>
+    <div class="form-group">
+      <label>Notes</label>
+      <textarea class="form-control" formControlName="notes" rows="2"></textarea>
+    </div>
+    <button class="btn btn-primary" type="submit" [disabled]="form.invalid">Save Allocation</button>
+  </form>
+</div>
+
+<div class="card">
+  <table>
+    <thead>
+      <tr>
+        <th>Scheme</th>
+        <th>Department</th>
+        <th>FY</th>
+        <th>Allocated</th>
+        <th>Utilized</th>
+        <th>Utilization</th>
+        <th>Remaining</th>
+        <th *ngIf="canManage()">Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let b of budgets">
+        <td>{{ b.scheme }}</td>
+        <td>{{ b.department?.name }}</td>
+        <td>{{ b.financialYear }}</td>
+        <td>₹{{ b.allocatedAmount | number }}</td>
+        <td>₹{{ (b.utilizedAmount || 0) | number }}</td>
+        <td><span class="badge" [ngClass]="utilBadgeClass(b.utilizationRate)">{{ b.utilizationRate }}%</span></td>
+        <td>₹{{ b.remainingAmount | number }}</td>
+        <td *ngIf="canManage()">
+          <button class="btn btn-danger btn-sm" (click)="deactivate(b._id)">Deactivate</button>
+        </td>
+      </tr>
+      <tr *ngIf="!loading && budgets.length === 0">
+        <td colspan="8" style="text-align:center; color:var(--text-muted);">No budget allocations found.</td>
+      </tr>
+    </tbody>
+  </table>
+</div>

@@ -1,0 +1,17 @@
+<aside class="sidebar">
+  <nav>
+    <ng-container *ngFor="let group of visibleGroups()">
+      <div class="sidebar-group-title">{{ group.title }}</div>
+      <a
+        *ngFor="let link of group.links"
+        [routerLink]="link.path"
+        routerLinkActive="active"
+        [routerLinkActiveOptions]="{ exact: !!link.exact }"
+        class="sidebar-link"
+      >
+        <span class="icon">{{ link.icon }}</span>
+        <span>{{ link.label }}</span>
+      </a>
+    </ng-container>
+  </nav>
+</aside>

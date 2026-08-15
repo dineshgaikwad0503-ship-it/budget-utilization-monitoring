@@ -1,0 +1,29 @@
+<div class="page-header">
+  <div>
+    <h1>Executive Summary</h1>
+    <p style="color:var(--text-muted); margin:0;">A condensed, high-level view of budget health across all departments</p>
+  </div>
+</div>
+
+<div class="grid grid-4" *ngIf="summary">
+  <div class="card stat-card"><div class="label">Total Allocated</div><div class="value">{{ formatCurrency(summary.totalAllocated) }}</div></div>
+  <div class="card stat-card"><div class="label">Total Utilized</div><div class="value">{{ formatCurrency(summary.totalSpent) }}</div></div>
+  <div class="card stat-card"><div class="label">Overall Utilization</div><div class="value">{{ summary.utilizationRate }}%</div></div>
+  <div class="card stat-card"><div class="label">Departments Flagged</div><div class="value">{{ summary.activeAlerts }}</div></div>
+</div>
+
+<div class="card" style="margin-top:20px;">
+  <h3>Department Health at a Glance</h3>
+  <table>
+    <thead><tr><th>Department</th><th>Allocated</th><th>Spent</th><th>Utilization</th><th>Status</th></tr></thead>
+    <tbody>
+      <tr *ngFor="let d of deptData">
+        <td>{{ d.department }}</td>
+        <td>{{ formatCurrency(d.allocated) }}</td>
+        <td>{{ formatCurrency(d.spent) }}</td>
+        <td>{{ d.utilizationRate }}%</td>
+        <td><span class="badge" [ngClass]="statusOf(d.utilizationRate).cls">{{ statusOf(d.utilizationRate).label }}</span></td>
+      </tr>
+    </tbody>
+  </table>
+</div>

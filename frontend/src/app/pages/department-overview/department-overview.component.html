@@ -1,0 +1,23 @@
+<div class="page-header">
+  <div>
+    <h1>Department Overview</h1>
+    <p style="color:var(--text-muted); margin:0;">Compare allocation, spend, and utilization rate across every department</p>
+  </div>
+</div>
+
+<div class="card" style="margin-bottom:20px;">
+  <h3>Allocation vs. Spend</h3>
+  <canvas baseChart [data]="chartData" [options]="chartOptions" type="bar" style="max-height:320px"></canvas>
+</div>
+
+<div class="grid grid-3">
+  <div class="card" *ngFor="let d of deptData">
+    <h3 style="font-size:15px;">{{ d.department }}</h3>
+    <p style="font-size:13px; margin:0 0 10px;">Allocated ₹{{ d.allocated | number }}</p>
+    <p style="font-size:13px; margin:0 0 10px;">Spent ₹{{ d.spent | number }}</p>
+    <span class="badge" [ngClass]="d.utilizationRate > 100 ? 'badge-danger' : d.utilizationRate < 40 ? 'badge-warning' : 'badge-success'">
+      {{ d.utilizationRate }}% utilized
+    </span>
+  </div>
+  <div class="empty-state" *ngIf="!loading && deptData.length === 0">No department data available.</div>
+</div>

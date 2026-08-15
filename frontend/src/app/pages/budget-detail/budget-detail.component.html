@@ -1,0 +1,46 @@
+<div class="breadcrumb"><a routerLink="/budgets">Budget Management</a> / Detail</div>
+
+<ng-container *ngIf="budget">
+  <div class="page-header">
+    <div>
+      <h1>{{ budget.scheme }}</h1>
+      <p style="color:var(--text-muted); margin:0;">{{ budget.department?.name }} · {{ budget.financialYear }} · {{ budget.quarter }}</p>
+    </div>
+    <a *ngIf="auth.hasRole('Admin','FinanceOfficer')" [routerLink]="['/budgets', budget._id, 'edit']" class="btn btn-outline">Edit Allocation</a>
+  </div>
+
+  <div class="grid grid-4">
+    <div class="card stat-card"><div class="label">Allocated</div><div class="value">₹{{ budget.allocatedAmount | number }}</div></div>
+    <div class="card stat-card"><div class="label">Utilized</div><div class="value">₹{{ (budget.utilizedAmount || 0) | number }}</div></div>
+    <div class="card stat-card"><div class="label">Remaining</div><div class="value">₹{{ budget.remainingAmount | number }}</div></div>
+    <div class="card stat-card"><div class="label">Utilization</div><div class="value"><span class="badge" [ngClass]="utilBadge()">{{ budget.utilizationRate }}%</span></div></div>
+  </div>
+
+  <div class="card" style="margin-top:20px;" *ngIf="budget.notes">
+    <h3>Notes</h3>
+    <p>{{ budget.notes }}</p>
+  </div>
+
+  <div class="card" style="margin-top:20px;">
+    <div class="page-header" style="margin-bottom:12px;">
+      <h3 style="margin:0;">Expenditure Transactions</h3>
+      <a routerLink="/expenditures" class="btn btn-outline btn-sm">Record Expenditure</a>
+    </div>
+    <table>
+      <thead><tr><th>Date</th><th>Category</th><th>Amount</th><th>Status</th></tr></thead>
+      <tbody>
+        <tr *ngFor="let e of expenditures">
+          <td>{{ e.date | date:'mediumDate' }}</td>
+          <td>{{ e.expenseCategory }}</td>
+          <td>₹{{ e.amountSpent | number }}</td>
+          <td><span class="badge badge-success">{{ e.status }}</span></td>
+        </tr>
+        <tr *ngIf="expenditures.length === 0">
+          <td colspan="4" style="text-align:center; color:var(--text-muted);">No expenditures recorded yet.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</ng-container>
+
+<div class="empty-state" *ngIf="!loading && !budget">Budget not found.</div>

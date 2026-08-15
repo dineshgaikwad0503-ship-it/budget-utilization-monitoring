@@ -1,0 +1,54 @@
+<div class="page-header">
+  <div>
+    <h1>Admin Panel</h1>
+    <p style="color:var(--text-muted); margin:0;">Manage users, departments, and system configuration</p>
+  </div>
+</div>
+
+<div class="card" style="margin-bottom:20px;">
+  <div class="page-header" style="margin-bottom:12px;">
+    <h3 style="margin:0;">Departments</h3>
+    <button class="btn btn-accent btn-sm" (click)="toggleDeptForm()">{{ showDeptForm ? 'Cancel' : '+ Add Department' }}</button>
+  </div>
+  <form [formGroup]="deptForm" (ngSubmit)="submitDept()" *ngIf="showDeptForm" style="margin-bottom:16px;">
+    <div class="grid grid-3">
+      <div class="form-group"><label>Name</label><input class="form-control" formControlName="name" /></div>
+      <div class="form-group"><label>Code</label><input class="form-control" formControlName="code" /></div>
+      <div class="form-group"><label>Description</label><input class="form-control" formControlName="description" /></div>
+    </div>
+    <button class="btn btn-primary" type="submit" [disabled]="deptForm.invalid">Save Department</button>
+  </form>
+  <table>
+    <thead><tr><th>Name</th><th>Code</th><th>Head</th></tr></thead>
+    <tbody>
+      <tr *ngFor="let d of departments">
+        <td>{{ d.name }}</td>
+        <td>{{ d.code }}</td>
+        <td>{{ d.headOfDepartment?.name || '—' }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="card">
+  <h3>Users</h3>
+  <table>
+    <thead><tr><th>Name</th><th>Email</th><th>Role</th><th>Department</th><th>Status</th><th>Actions</th></tr></thead>
+    <tbody>
+      <tr *ngFor="let u of users">
+        <td>{{ u.name }}</td>
+        <td>{{ u.email }}</td>
+        <td>
+          <select class="form-control" style="padding:4px 8px; font-size:13px;" [value]="u.role" (change)="changeRole(u, $any($event.target).value)">
+            <option value="Admin">Admin</option>
+            <option value="FinanceOfficer">Finance Officer</option>
+            <option value="DepartmentHead">Department Head</option>
+          </select>
+        </td>
+        <td>{{ u.department?.name || '—' }}</td>
+        <td><span class="badge" [ngClass]="u.isActive ? 'badge-success' : 'badge-danger'">{{ u.isActive ? 'Active' : 'Inactive' }}</span></td>
+        <td><button class="btn btn-outline btn-sm" (click)="toggleActive(u)">{{ u.isActive ? 'Deactivate' : 'Activate' }}</button></td>
+      </tr>
+    </tbody>
+  </table>
+</div>

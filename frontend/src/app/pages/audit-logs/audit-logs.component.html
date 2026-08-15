@@ -1,0 +1,24 @@
+<div class="page-header">
+  <div>
+    <h1>Audit Logs</h1>
+    <p style="color:var(--text-muted); margin:0;">System-wide activity trail for financial governance and accountability</p>
+  </div>
+</div>
+
+<div class="card">
+  <table>
+    <thead><tr><th>Timestamp</th><th>User</th><th>Action</th><th>Entity</th><th>IP</th></tr></thead>
+    <tbody>
+      <tr *ngFor="let log of logs">
+        <td>{{ log.createdAt | date:'medium' }}</td>
+        <td>{{ log.user?.name || 'System' }}</td>
+        <td>{{ log.action }}</td>
+        <td>{{ log.entityType }}</td>
+        <td>{{ log.ipAddress || '—' }}</td>
+      </tr>
+      <tr *ngIf="!loading && logs.length === 0">
+        <td colspan="5" style="text-align:center; color:var(--text-muted);">No audit log entries found.</td>
+      </tr>
+    </tbody>
+  </table>
+</div>

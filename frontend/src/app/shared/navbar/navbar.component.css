@@ -1,0 +1,23 @@
+.navbar {
+  height: 64px; display: flex; align-items: center; justify-content: space-between;
+  padding: 0 24px; background: rgba(10,17,36,0.85); backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--border); color: #fff; position: sticky; top: 0; z-index: 20;
+}
+.brand { display: flex; align-items: center; gap: 12px; }
+.brand-icon {
+  font-size: 20px; width: 38px; height: 38px; display: flex; align-items: center; justify-content: center;
+  border-radius: 10px; background: var(--accent-soft); color: var(--accent);
+  box-shadow: 0 0 16px -4px rgba(47,230,168,0.6);
+}
+.brand-title { font-weight: 700; font-size: 15px; }
+.brand-subtitle { font-size: 11px; color: var(--text-dim); }
+.navbar-right { display: flex; align-items: center; gap: 14px; }
+.nav-icon-btn {
+  width: 36px; height: 36px; border-radius: 8px; display: flex; align-items: center; justify-content: center;
+  background: transparent; border: 1px solid var(--border); color: var(--text-muted); position: relative;
+}
+.nav-icon-btn:hover { border-color: var(--border-glow); color: var(--accent); }
+.nav-dot { position: absolute; top: -3px; right: -3px; width: 8px; height: 8px; border-radius: 50%; background: var(--danger); box-shadow: 0 0 6px var(--danger); }
+.user-info { text-align: right; }
+.user-name { font-size: 13px; font-weight: 600; }
+.user-role { font-size: 11px; color: var(--text-dim); }

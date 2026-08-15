@@ -1,0 +1,27 @@
+# Render Blueprint — deploys this project as a single web service.
+# In Render: New + -> Blueprint -> point at this repo -> Render reads this file.
+#
+# The build installs both backend and frontend dependencies and produces the
+# Angular production build; the start command runs the Express server, which
+# serves that build as static files and answers /api/* itself — one service,
+# one URL, no separate frontend deployment needed.
+services:
+  - type: web
+    name: budget-utilization-monitoring
+    runtime: node
+    plan: free
+    region: singapore
+    buildCommand: npm run build
+    startCommand: npm start
+    healthCheckPath: /api/health
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: MONGO_URI
+        sync: false          # set this in the Render dashboard — your MongoDB Atlas connection string
+      - key: JWT_SECRET
+        generateValue: true  # Render auto-generates a strong random secret
+      - key: JWT_EXPIRES_IN
+        value: 8h
+      - key: CLIENT_URL
+        value: "*"           # same-origin deployment; CORS restriction not required
