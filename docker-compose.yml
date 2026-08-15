@@ -1,0 +1,40 @@
+# Local development / evaluation stack: the app container (built from the
+# root Dockerfile, frontend+backend in one image) plus a bundled MongoDB —
+# no Atlas account needed to try the project locally.
+#
+# Usage:
+#   docker compose up --build          # first run / after code changes
+#   docker compose exec app npm run seed   # populate demo data (run once)
+#   Open http://localhost:5000
+#
+# For production (e.g. Render), the app image is deployed on its own
+# against a real MongoDB Atlas cluster — see render.yaml / README.md.
+
+services:
+  mongo:
+    image: mongo:7
+    restart: unless-stopped
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo-data:/data/db
+
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    depends_on:
+      - mongo
+    ports:
+      - "5000:5000"
+    environment:
+      PORT: 5000
+      MONGO_URI: mongodb://mongo:27017/budget_utilization_db
+      JWT_SECRET: local-dev-secret-change-me
+      JWT_EXPIRES_IN: 8h
+      CLIENT_URL: "*"
+      NODE_ENV: production
+
+volumes:
+  mongo-data:
