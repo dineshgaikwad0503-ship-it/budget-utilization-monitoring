@@ -11,7 +11,8 @@ services:
     runtime: node
     plan: free
     region: singapore
-    buildCommand: cd frontend && npm ci && npx ng build    startCommand: npm start
+    buildCommand: npm run build
+    startCommand: npm start
     healthCheckPath: /api/health
     envVars:
       - key: NODE_ENV

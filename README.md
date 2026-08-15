@@ -139,8 +139,8 @@ The frontend reads its API base URL from `src/environments/environment.ts`
 ### 3. Production build
 
 ```bash
-cd frontend
-npm run build                # outputs to frontend/dist/budget-utilization-monitoring
+d frontend
+npm run build c               # outputs to frontend/dist/budget-utilization-monitoring
 ```
 
 Deploy the backend to any Node host (Render, Azure App Service, AWS
