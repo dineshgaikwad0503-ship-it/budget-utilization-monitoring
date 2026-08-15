@@ -1,18 +1,28 @@
 FROM node:20-alpine AS build
 WORKDIR /app
+
 COPY package*.json ./
 RUN npm install
+
 COPY backend/package*.json ./backend/
-RUN cd backend && npm install
+RUN cd backend && npm install --omit=dev
+
 COPY frontend/package*.json ./frontend/
 RUN cd frontend && npm install
+
 COPY . .
-RUN cd frontend && npx ng build
+
+RUN cd frontend && npx -y @angular/cli@17 build --configuration production
+
 FROM node:20-alpine
 WORKDIR /app
+
 COPY --from=build /app/backend ./backend
 COPY --from=build /app/frontend/dist ./frontend/dist
+
 WORKDIR /app/backend
 ENV NODE_ENV=production
+
 EXPOSE 10000
-CMD ["npm","start"]
+
+CMD ["npm", "start"]
